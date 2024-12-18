@@ -287,6 +287,7 @@ def plot_signature(signature_tensor,
         ax_limits.extend([*ax.get_ylim()])
         ax_list.append(ax)
 
+        ax_title = fig.add_subplot(G[1, i:i + 1])
         set_grid_title(G[1, i:i + 1], SNV_MUT_TYPES[i - 6], COLORS[i - 6], size=12)
 
     set_grid_title(G[0, 6:],
@@ -348,6 +349,7 @@ def plot_signature(signature_tensor,
         ax_limits.extend([*ax.get_ylim()])
         ax_list.append(ax)
 
+        ax_title = fig.add_subplot(G[1, i:i + 1])
         set_grid_title(G[1, i:i + 1], SNV_MUT_TYPES[i - 6], COLORS[i - 6], size=12)
 
     ymin, ymax = np.min(ax_limits), np.max(ax_limits)

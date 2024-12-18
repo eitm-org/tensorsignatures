@@ -643,8 +643,7 @@ class TensorSignature(object):
             snv (array, shape :math:`(3, 3, (t_1+1), \dots, (t_l), p, n)`):
                 Collapsed SNV array.
         """
-        i0, i1, i2, i3, i4, i5, i6 =  [slice(None)] * (snv.ndim - 3) + [0] + [slice(None)] * 2
-        col1 = snv[i0, i1, i2, i3, i4, i5, i6]
+        col1 = snv[[slice(None)] * (snv.ndim - 3) + [0] + [slice(None)] * 2]
         col2 = []
         dims = [
             (1, 1), (1, 0), (1, 2),
@@ -658,8 +657,7 @@ class TensorSignature(object):
                 + [1] \
                 + [slice(None)] \
                 * 2
-            i0, i1, i2, i3, i4, i5, i6 =  idx
-            col2.append(snv[i0, i1, i2, i3, i4, i5, i6])
+            col2.append(snv[idx])
 
         col2 = np.stack(col2).reshape(col1.shape)
 
@@ -834,7 +832,7 @@ class TensorSignatureRefit(TensorSignature):
         self.S0 = tf.constant(self.ref._S0[..., 0], name='S0')
         S1 = tf.nn.softmax(
             tf.concat([self.S0, tf.zeros([2, 2, 1, self.rank])], axis=2),
-            axis=2, name='S1')
+            dim=2, name='S1')
 
         # stack the tensor
         self._S1 = tf.reshape(

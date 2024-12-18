@@ -235,7 +235,7 @@ class TensorSignatureBootstrap(TensorSignature):
         self.S0 = tf.Variable(S0, name='S0')
         S1 = tf.nn.softmax(
             tf.concat([self.S0, tf.zeros([2, 2, 1, self.rank])], axis=2),
-            axis=2, name='S1')
+            dim=2, name='S1')
         self._S1 = tf.reshape(
             tf.stack([
                 S1[0, 0, :, :],
@@ -348,7 +348,7 @@ class TensorSignatureBootstrap(TensorSignature):
         T1 = tf.nn.softmax(
             tf.concat([self.T0, tf.zeros([1, self.rank], dtype=self.dtype)],
                       axis=0),
-            axis=0, name='T')
+            dim=0, name='T')
 
         self._T = T1 * (1 - tf.reshape(self.M, (1, self.rank)))
         if self.verbose:
@@ -601,7 +601,7 @@ class TensorSignatureBootT(TensorSignatureBootstrap):
     def T(self):
 
         self.T0 = tf.Variable(tf.truncated_normal([self.q-1, self.rank], dtype=self.dtype), name='T0')
-        T1 = tf.nn.softmax(tf.concat([self.T0, tf.zeros([1, self.rank], dtype=self.dtype)], axis=0), axis=0, name='T')
+        T1 = tf.nn.softmax(tf.concat([self.T0, tf.zeros([1, self.rank], dtype=self.dtype)], axis=0), dim=0, name='T')
         self._T = T1 * (1-tf.reshape(self.M, (1, self.rank)))
         if self.verbose:
             print('T (reinitialized):', self._T.shape)
@@ -728,7 +728,7 @@ class TensorSignatureRandomize(TensorSignatureBootstrap):
         #print(S0)
 
         self.S0 = tf.Variable(S0, name='S0') # basic parameters [+/+, +/-] x [Pyr, Pur] x 96-1 x s
-        S1 = tf.nn.softmax(tf.concat([self.S0, tf.zeros([2, 2, 1, self.rank])], axis=2), axis=2, name='S1') # pad 0
+        S1 = tf.nn.softmax(tf.concat([self.S0, tf.zeros([2, 2, 1, self.rank])], axis=2), dim=2, name='S1') # pad 0
         self._S1 = tf.reshape(
             tf.stack([
                 S1[0, 0, :, :], S1[1, 0, :, :], 0.5 * tf.reduce_sum(S1[:, 0, :, :], axis=0),
@@ -750,7 +750,7 @@ class TensorSignatureRandomize(TensorSignatureBootstrap):
         #print(T0)
 
         self.T0 = tf.Variable(T0, name='T0')
-        T1 = tf.nn.softmax(tf.concat([self.T0, tf.zeros([1, self.rank], dtype=self.dtype)], axis=0), axis=0, name='T')
+        T1 = tf.nn.softmax(tf.concat([self.T0, tf.zeros([1, self.rank], dtype=self.dtype)], axis=0), dim=0, name='T')
         self._T = T1 * (1 - tf.reshape(self.M, (1, self.rank)))
         if self.verbose:
             print('T:', self._T.shape)
