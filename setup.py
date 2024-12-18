@@ -13,15 +13,15 @@ def get_dist(pkgname):
         return None
 
 requirements = [
-    'Click==7.0',
-    'scipy==1.3.2',
-    'pandas==0.25.3',
+    'Click',
+    'scipy',
+    'pandas',
     'h5py==2.10.0',
-    'numpy<1.17,>=1.14.5',
-    'scikit-learn==0.21.3',
-    'matplotlib>=3.0.0,<3.2.0',
-    'tensorflow<=1.15.0',
-    'tqdm==4.39.0']
+    'numpy',
+    'scikit-learn',
+    'matplotlib',
+    'tensorflow',
+    'tqdm']
 
 if get_dist('tensorflow') is None and get_dist('tensorflow-gpu') is not None:
     requirements.remove('tensorflow<=1.15.0')
