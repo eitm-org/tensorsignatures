@@ -16,7 +16,7 @@ requirements = [
     'Click',
     'scipy',
     'pandas',
-    'h5py==2.10.0',
+    'h5py',
     'numpy',
     'scikit-learn',
     'matplotlib',
